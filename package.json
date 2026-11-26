@@ -1,0 +1,25 @@
+{
+  "name": "sehatyab",
+  "version": "0.1.0",
+  "description": "Sehatyab - integrated digital health platform prototype for Pakistan",
+  "private": true,
+  "type": "module",
+  "main": "server/index.js",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server/index.js",
+    "seed": "node server/seed.js --reset",
+    "import:healthsites": "node server/import-healthsites.js",
+    "backup": "node --env-file-if-exists=.env server/backup.js --verify",
+    "loadtest": "node scripts/loadtest.js",
+    "test": "node --no-warnings --test test/*.test.js"
+  },
+  "dependencies": {
+    "compression": "^1.8.0",
+    "express": "^5.1.0",
+    "leaflet": "^1.9.4",
+    "qrcode-generator": "^1.4.4"
+  }
+}

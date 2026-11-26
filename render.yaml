@@ -1,0 +1,33 @@
+# Render Blueprint — free public DEMO of Sehatyab (fictional data).
+# Render → New → Blueprint → pick this GitHub repo → Apply.
+# Free tier: sleeps after 15 min idle (~50 s to wake); the disk is temporary, so the demo database
+# is recreated with fictional data on every restart/deploy. NOT for real patient data — see DEPLOY.md.
+services:
+  - type: web
+    name: sehatyab
+    runtime: node
+    plan: free
+    region: singapore          # closest Render region to Pakistan
+    buildCommand: npm ci --omit=dev && node scripts/fetch-healthsites.js
+    startCommand: node server/index.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SEED_DEMO          # demo only: load the fictional demo accounts
+        value: "1"
+      - key: DATA_KEY
+        generateValue: true
+      - key: HMAC_KEY
+        generateValue: true
+      - key: FORCE_HTTPS
+        value: "1"
+      - key: TRUST_PROXY
+        value: "1"
+      - key: BACKUPS            # temporary disk on the free tier — backups would vanish anyway
+        value: "off"
+      - key: VAPID_SUBJECT
+        value: https://github.com/sehatyab
+      - key: MAPBOX_TOKEN       # paste your public pk.* token in the Render dashboard (optional)
+        sync: false
