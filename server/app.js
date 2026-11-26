@@ -21,6 +21,7 @@ import energyRoutes from './routes/energy.js';
 import privacyRoutes from './routes/privacy.js';
 import adminRoutes from './routes/admin.js';
 import careRoutes from './routes/care.js';
+import geoRoutes from './routes/geo.js';
 import { vapidPublicKey } from './lib/push.js';
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -86,6 +87,7 @@ export function createApp({ dbFile = path.join(ROOT, 'data', 'sehatyab.db'), db 
   api.use('/privacy', privacyRoutes(ctx));
   api.use('/admin', adminRoutes(ctx));
   api.use('/care', careRoutes(ctx));
+  api.use('/geo', geoRoutes(ctx));
   api.get('/notifications', ctx.auth.requireAuth, (req, res) => {
     res.json(h.all('SELECT * FROM notifications WHERE user_id = ? ORDER BY id DESC LIMIT 50', req.user.id));
   });

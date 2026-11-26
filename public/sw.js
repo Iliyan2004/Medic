@@ -3,9 +3,9 @@
 // App code (HTML/JS/CSS) is NETWORK-FIRST: when online you always get the current version, so old and new
 // files are never mixed after an update. The cache is used only when the network fails (offline).
 // Big third-party files (/vendor: map library, QR library) are versioned and rarely change → cache-first.
-const VERSION = 'sy-v7';
+const VERSION = 'sy-v8';
 const SHELL = ['/', '/index.html', '/css/app.css', '/js/app.js', '/js/tilt.js', '/js/i18n.js', '/js/phone.js', '/js/tools.js', '/js/ur.js',
-  ...['_shared', '_map', 'home', 'emergency', 'care', 'pharmacy', 'records', 'map', 'auth', 'insurance', 'support', 'community', 'energy', 'privacy', 'work'].map((v) => `/js/views/${v}.js`),
+  ...['_shared', '_map', 'home', 'emergency', 'care', 'pharmacy', 'records', 'map', 'auth', 'insurance', 'support', 'community', 'energy', 'privacy', 'work', 'geo'].map((v) => `/js/views/${v}.js`),
   '/icon.svg', '/manifest.webmanifest'];
 
 self.addEventListener('install', (e) => {

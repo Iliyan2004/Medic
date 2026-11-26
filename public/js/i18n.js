@@ -2,7 +2,7 @@
 // remaining screens fall back to English (see README: translation backlog).
 const en = {
   nav_home: 'Home', nav_pharmacy: 'Pharmacy', nav_insurance: 'Insurance', nav_support: 'Support', nav_map: 'Map',
-  nav_community: 'Community', nav_emergency: 'Emergency', nav_records: 'Records', nav_energy: 'Energy', nav_privacy: 'Privacy', nav_care: 'My care',
+  nav_community: 'Community', nav_emergency: 'Emergency', nav_records: 'Records', nav_energy: 'Energy', nav_privacy: 'Privacy', nav_care: 'My care', nav_geo: 'Health map',
   workspace: 'Workspace', nav_work_doctor: 'My patients', nav_work_pharmacist: 'Pharmacy desk', nav_work_insurer: 'Claims desk',
   nav_work_dispatch: 'Dispatch board', nav_work_facility: 'My facility', nav_work_programs: 'Programmes & PPP', nav_work_admin: 'Admin',
   sign_in: 'Sign in', sign_out: 'Sign out', create_account: 'Create account', loading: 'Loading…', not_found: 'Page not found',
@@ -22,7 +22,7 @@ const en = {
 };
 const ur = {
   nav_home: 'ہوم', nav_pharmacy: 'فارمیسی', nav_insurance: 'انشورنس', nav_support: 'مالی مدد', nav_map: 'نقشہ',
-  nav_community: 'کمیونٹی', nav_emergency: 'ایمرجنسی', nav_records: 'ریکارڈ', nav_energy: 'توانائی', nav_privacy: 'رازداری', nav_care: 'میری دیکھ بھال',
+  nav_community: 'کمیونٹی', nav_emergency: 'ایمرجنسی', nav_records: 'ریکارڈ', nav_energy: 'توانائی', nav_privacy: 'رازداری', nav_care: 'میری دیکھ بھال', nav_geo: 'صحت کا نقشہ',
   workspace: 'ورک اسپیس', nav_work_doctor: 'میرے مریض', nav_work_pharmacist: 'فارمیسی ڈیسک', nav_work_insurer: 'کلیم ڈیسک',
   nav_work_dispatch: 'ڈسپیچ بورڈ', nav_work_facility: 'میرا ہسپتال', nav_work_programs: 'پروگرام اور پی پی پی', nav_work_admin: 'ایڈمن',
   sign_in: 'سائن اِن', sign_out: 'سائن آؤٹ', create_account: 'اکاؤنٹ بنائیں', loading: 'لوڈ ہو رہا ہے…', not_found: 'صفحہ نہیں ملا',

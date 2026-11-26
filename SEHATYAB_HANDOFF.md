@@ -310,6 +310,13 @@ Map tiles (OpenStreetMap) and routing (public OSRM) are real but rate-limited. S
 - **Accessibility**: automated audit of 27 screens; 58 form fields linked to their labels.
 - Tests: 43 (`api`, `features`, `care`, `ops`).
 
+## 8e. Health map (`#/geo`) — session 5
+
+- **Disease:** weekly facility case reports (`disease_reports`, IDSR/DHIS2-style aggregates) plus ICD-10-matched insurance claims, by city. Alert = ≥5 cases and > mean + 2 SD of the previous 4 weeks (SD floored at √mean); "watch" at +1 SD. Counts 1–4 shown as "<5"; no individual locations ever returned. Demo counts are `source='demo'` and labelled in the UI. Facility admins report from their workspace.
+- **Access to care:** per city from all facilities (verified + OSM): hospitals within 10 km, nearest verified ER, lab, blood bank; 10 km coverage circles. Lab/blood-bank gaps only count where there are fewer than 3 hospitals nearby (hospitals usually have their own). "Possibly under-mapped" when fewer than 5 facilities are within 10 km.
+- **Medicine supply:** essential-medicine availability by city from partner pharmacy stock; OTC-only (Form 10) cities explained rather than shown as shortages.
+- Code: `server/lib/geo-health.js`, `server/lib/places.js`, `server/routes/geo.js`, `public/js/views/geo.js`. Tests: `test/geo.test.js` (48 total).
+
 ## 9. Instructions for Claude Code
 
 - Run `npm install`, then `npm test` (expect 20 passing), then `npm start`.

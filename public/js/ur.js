@@ -180,6 +180,15 @@ const P = {
   '🆘 Show my emergency card to the crew': '🆘 عملے کو میرا ایمرجنسی کارڈ دکھائیں', 'Compare prices': 'قیمتوں کا موازنہ', 'Cheapest': 'سب سے سستی',
   '📷 Scan with camera': '📷 کیمرے سے اسکین کریں', '…or type the code': '…یا کوڈ لکھیں', 'Close': 'بند کریں', 'Point at the small square code on the pack': 'پیک پر چھوٹے چوکور کوڈ کی طرف کیمرہ کریں',
   'Speak instead of typing': 'لکھنے کے بجائے بولیں', 'Read this page aloud': 'یہ صفحہ پڑھ کر سنائیں', 'Read aloud': 'پڑھ کر سنائیں',
+  // Health map
+  'Disease': 'بیماری', 'Access to care': 'علاج تک رسائی', 'Medicine supply': 'دواؤں کی فراہمی', 'Disease map': 'بیماریوں کا نقشہ',
+  'Weekly cases reported by facilities, by city.': 'مراکزِ صحت کی ہفتہ وار رپورٹ کردہ کیسز، شہر کے لحاظ سے۔', 'Health map': 'صحت کا نقشہ', '📊 Health map': '📊 صحت کا نقشہ',
+  'This week': 'اس ہفتے', '8 weeks': '8 ہفتے', 'Trend': 'رجحان', 'Rising': 'بڑھ رہا ہے', 'Watch': 'نظر رکھیں', 'Normal': 'معمول',
+  'How this map works': 'یہ نقشہ کیسے کام کرتا ہے', 'Hospitals mapped': 'نقشے پر ہسپتال', 'Facilities mapped': 'نقشے پر مراکز', 'Cities with a gap': 'کمی والے شہر',
+  'How far people are from a hospital, emergency room, lab and blood bank.': 'لوگ ہسپتال، ایمرجنسی، لیب اور بلڈ بینک سے کتنی دور ہیں۔', 'By city': 'شہر کے لحاظ سے',
+  'Covered': 'سہولت موجود', '24/7 ER only': 'صرف 24 گھنٹے ایمرجنسی', 'Verified only': 'صرف تصدیق شدہ', 'Essential medicines available': 'ضروری دوائیں دستیاب',
+  'Essential medicines in stock at licensed pharmacies, by city.': 'لائسنس یافتہ فارمیسیوں میں ضروری دواؤں کا ذخیرہ، شہر کے لحاظ سے۔',
+  '📊 Weekly disease report': '📊 ہفتہ وار بیماری رپورٹ', 'Submit report': 'رپورٹ جمع کریں', 'Disease, access & medicines': 'بیماری، رسائی اور دوائیں',
   // Account & this phone
   'Care preferences': 'دیکھ بھال کی ترجیحات', 'Emergency contact name': 'ایمرجنسی رابطے کا نام', 'Emergency contact mobile': 'ایمرجنسی رابطے کا موبائل',
   'Tell me about free health camps in my city': 'میرے شہر میں مفت ہیلتھ کیمپ کی اطلاع دیں', 'Last blood donation': 'آخری بار خون کا عطیہ',

@@ -15,7 +15,7 @@ export default async function mapView({ view, params }) {
   let near = null;
   render(view, html`
     <div class="page-head"><div><h1>Hospitals, clinics & camps</h1><p class="muted">Verified places and free camps near you.</p></div>
-      ${state.user ? html`<button class="btn" id="add-btn" type="button">+ Add a health camp</button>` : ''}</div>
+      <div class="row"><a class="btn" href="#/geo">📊 Health map</a>${state.user ? html`<button class="btn" id="add-btn" type="button">+ Add a health camp</button>` : ''}</div></div>
     <form id="filters" class="card">
       <div class="row">
         <select name="type" aria-label="Type" style="width:auto">${TYPES.map(([v, l]) => html`<option value="${v}" ${v === f.type ? 'selected' : ''}>${l}</option>`)}</select>

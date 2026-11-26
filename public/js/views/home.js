@@ -10,6 +10,7 @@ const CORE = [
 ];
 const MORE = [
   ['#/map', '🗺️', 'map', 'Hospitals & camps', 'Find care near you', 'Verified hospitals, clinics, BHUs, labs, blood banks and today’s free health camps on a map.'],
+  ['#/geo', '📊', 'records', 'Health map', 'Disease, access & medicines', 'Where diseases are rising, which areas lack hospitals or blood banks, and essential-medicine stock by city.'],
   ['#/community', '💬', 'community', 'Community', 'Ask verified doctors', 'Questions answered by verified doctors, blood donation requests and local health alerts.'],
   ['#/energy', '☀️', 'energy', 'Clinic energy', 'Power & vaccine fridges', 'Power and vaccine-fridge monitoring for clinics, plus a solar sizing calculator under net billing.'],
   ['#/privacy', '🔒', 'privacy', 'Privacy', 'Your data, your rights', 'How we protect your data, and how to download or delete it.'],
@@ -61,7 +62,7 @@ export default async function home({ view, parts }) {
       <div class="grid">${CORE.map(tile)}</div>
 
       <details class="more">
-        <summary><span>More services</span><span class="muted small">Map, community, energy, privacy</span></summary>
+        <summary><span>More services</span><span class="muted small">Map, health map, community, energy, privacy</span></summary>
         <div class="more-body"><div class="grid">${MORE.map(tile)}</div></div>
       </details>
 

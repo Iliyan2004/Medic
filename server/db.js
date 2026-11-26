@@ -480,6 +480,19 @@ CREATE TABLE IF NOT EXISTS lab_bookings (
   created_at TEXT DEFAULT (datetime('now'))
 );
 
+-- ───────────── Health geography: weekly facility disease reports (IDSR / DHIS2-style aggregate counts) ─────────────
+CREATE TABLE IF NOT EXISTS disease_reports (
+  id INTEGER PRIMARY KEY,
+  facility_id INTEGER NOT NULL REFERENCES facilities(id),
+  week_start TEXT NOT NULL,          -- Monday of the ISO week, YYYY-MM-DD
+  disease TEXT NOT NULL,             -- code from DISEASES (lib/geo-health.js)
+  cases INTEGER NOT NULL,
+  source TEXT DEFAULT 'facility',    -- facility | demo
+  reported_by INTEGER,
+  created_at TEXT DEFAULT (datetime('now')),
+  UNIQUE(facility_id, week_start, disease)
+);
+
 CREATE TABLE IF NOT EXISTS push_subs (
   id INTEGER PRIMARY KEY,
   user_id INTEGER NOT NULL REFERENCES users(id),

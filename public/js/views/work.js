@@ -56,6 +56,30 @@ async function labQueue(box) {
   }));
 }
 
+// Weekly disease report (aggregate case counts → Health map)
+async function diseaseReportForm(box) {
+  const [diseases, past] = await Promise.all([api('/geo/diseases'), api('/geo/disease-reports/mine')]);
+  const monday = (() => { const x = new Date(); x.setHours(0, 0, 0, 0); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; })();
+  // Local calendar date (toISOString would shift Pakistan's midnight back to the previous UTC day).
+  const ymd = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const weeks = [0, 1, 2].map((i) => { const d = new Date(monday); d.setDate(d.getDate() - 7 * i); return [ymd(d), i === 0 ? 'This week' : i === 1 ? 'Last week' : '2 weeks ago']; });
+  const prev = (code, ws) => past.find((p) => p.disease === code && p.week_start === ws)?.cases ?? '';
+  const draw = (ws) => html`<div class="form-grid">${diseases.map((d) => html`<div class="field"><label for="dr-${d.code}">${d.name}</label><input id="dr-${d.code}" name="${d.code}" type="number" min="0" step="1" value="${prev(d.code, ws)}" placeholder="0"></div>`)}</div>`;
+  box.innerHTML = String(more('📊 Weekly disease report', html`<form id="drf">
+      <p class="small muted">Count new cases seen at your facility this week, clinically diagnosed or lab-confirmed. Only city totals are shown publicly, on the Health map.</p>
+      <div class="field"><label for="drw">Week starting</label><select id="drw" name="week_start">${weeks.map(([v, l]) => html`<option value="${v}">${l} (${v})</option>`)}</select></div>
+      <div id="drfields">${draw(weeks[0][0])}</div>
+      <button class="btn btn-primary" type="submit">Submit report</button> <a class="btn" href="#/geo">See the Health map</a></form>`, { hint: 'Feeds the disease map' }));
+  const form = box.querySelector('#drf');
+  form.week_start.addEventListener('change', () => { box.querySelector('#drfields').innerHTML = String(draw(form.week_start.value)); });
+  onSubmit(form, async (d) => {
+    const counts = Object.fromEntries(diseases.filter((x) => d[x.code] !== undefined).map((x) => [x.code, Number(d[x.code])]));
+    if (!Object.keys(counts).length) throw new Error('Enter at least one count (0 is fine)');
+    const r = await api('/geo/disease-reports', { method: 'POST', body: { week_start: d.week_start, counts } });
+    toast(`Report saved for the week of ${r.week_start} — thank you`);
+  });
+}
+
 // ───────── Doctor ─────────
 const rxLine = (i, products) => html`<div class="form-grid"><div class="field"><label for="f-p${i}">Medicine ${i + 1}</label><select id="f-p${i}" name="p${i}"><option value="">—</option>${products.filter((p) => p.schedule !== 'controlled').map((p) => html`<option value="${p.id}">${p.name}</option>`)}</select></div>
   <div class="field"><label for="f-q${i}">Packs</label><input id="f-q${i}" name="q${i}" type="number" min="1" value="1"></div><div class="field"><label for="f-d${i}">Dosage</label><input id="f-d${i}" name="d${i}"></div></div>`;
@@ -259,7 +283,7 @@ async function facility(view) {
   const [f, notes, contracts] = await Promise.all([api(`/facilities/${fid}`), api(`/facilities/${fid}/notifications`), api('/support/ppp')]);
   const mine = contracts.filter((c) => c.facility_id === fid);
   render(view, html`<h1>${f.name}</h1>
-    <div id="appq"></div><div id="labq"></div>
+    <div id="appq"></div><div id="labq"></div><div id="dreport"></div>
     <div class="grid-2">
       <div class="card"><h2>Incoming alerts</h2><p class="small muted">Ambulance pre-alerts, cashless approvals and power alerts.</p>
         <ul class="list">${notes.length ? notes.map((n) => html`<li><div>${n.kind === 'pre_alert' ? '🚑 ' : n.kind === 'energy' ? '⚡ ' : '📄 '}${n.message}</div><div class="tiny muted">${when(n.created_at)}</div></li>`) : html`<li class="muted">None.</li>`}</ul></div>
@@ -281,6 +305,7 @@ async function facility(view) {
       <button class="btn btn-primary" type="submit">Submit report</button></form>`, { hint: 'Due monthly' }) : ''}`);
   appointmentQueue(view.querySelector('#appq')).catch(() => {});
   labQueue(view.querySelector('#labq')).catch(() => {});
+  diseaseReportForm(view.querySelector('#dreport')).catch(() => {});
   onSubmit(view.querySelector('#beds'), async (d) => { await api(`/facilities/${fid}/beds`, { method: 'PATCH', body: d }); toast('Updated'); });
   onSubmit(view.querySelector('#en'), async (d) => {
     const r = await api('/energy/readings', { method: 'POST', body: { facility_id: fid, ...d } });

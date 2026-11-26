@@ -361,6 +361,33 @@ export function seedExtras(h) {
         h.run('UPDATE inventory SET price = ? WHERE pharmacy_id = ? AND product_id = ?', Math.min(row.mrp, Math.round(row.price * (row.price_controlled ? Math.max(k, 0.97) : k))), row.pharmacy_id, row.product_id);
       }
     }
+    // Demo weekly disease reports (source = 'demo'): 8 weeks for the verified demo facilities.
+    // Pattern loosely follows Pakistan's post-monsoon season (Oct–Nov): dengue up in Karachi & Lahore,
+    // typhoid/diarrhoea in Sindh. Numbers are FICTIONAL.
+    if (!h.get('SELECT 1 FROM disease_reports LIMIT 1')) {
+      const monday = (() => { const x = new Date(); x.setUTCHours(0, 0, 0, 0); x.setUTCDate(x.getUTCDate() - ((x.getUTCDay() + 6) % 7)); return x; })();
+      const wk = (i) => new Date(monday.getTime() - i * 7 * 86_400_000).toISOString().slice(0, 10);
+      const base = { // per facility per week, by city
+        Karachi: { dengue: 9, malaria: 3, typhoid: 7, diarrhoea: 14, hepatitis: 2, tb: 3, ili: 6 },
+        Lahore: { dengue: 7, malaria: 1, typhoid: 3, diarrhoea: 8, hepatitis: 2, tb: 2, ili: 7 },
+        Peshawar: { dengue: 2, malaria: 2, typhoid: 3, diarrhoea: 9, measles: 2, tb: 4, ili: 5 },
+        Islamabad: { dengue: 3, typhoid: 2, diarrhoea: 5, ili: 6 },
+        Quetta: { malaria: 3, typhoid: 2, diarrhoea: 7, measles: 1, tb: 3 },
+      };
+      const rising = { Karachi: { dengue: 2.6 }, Lahore: { dengue: 1.7 } }; // last-week multiplier
+      let seedN = 7;
+      const rnd = () => ((seedN = (seedN * 1103515245 + 12345) % 2147483648) / 2147483648);
+      for (const f of h.all(`SELECT id, city FROM facilities WHERE verified = 1 AND type IN ('hospital','clinic','bhu','rhc')`)) {
+        const b = base[f.city]; if (!b) continue;
+        for (let i = 7; i >= 0; i--) for (const [code, rate] of Object.entries(b)) {
+          const season = 1 + (7 - i) * 0.04; // slowly climbing season
+          const mult = i === 0 ? (rising[f.city]?.[code] || 1) : 1;
+          const n = Math.max(0, Math.round(rate * season * mult * (0.75 + rnd() * 0.5)));
+          h.run(`INSERT OR IGNORE INTO disease_reports (facility_id, week_start, disease, cases, source) VALUES (?,?,?,?, 'demo')`, f.id, wk(i), code, n);
+        }
+      }
+    }
+
     const ayesha = h.get(`SELECT * FROM users WHERE phone = '03001234567'`);
     if (ayesha && !h.get('SELECT 1 FROM med_schedules WHERE user_id = ?', ayesha.id)) {
       const metfor = h.get(`SELECT id, name FROM products WHERE generic LIKE 'Metformin%' LIMIT 1`);
