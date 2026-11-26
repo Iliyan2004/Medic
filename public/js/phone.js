@@ -210,7 +210,9 @@ export function init() {
   applyDisplay();
   applyDiscreet();
   initReadAloud();
-  if (location.hash.startsWith('#/rx-check') || location.hash.startsWith('#/card')) { /* opened from a QR / paramedic: no walkthrough */ } else onboarding();
+  // No walkthrough when opened from a QR code / by a paramedic, or from a shared link with ?tour=0 (reviews, demos).
+  if (/[?&]tour=0\b/.test(location.hash + location.search)) prefs.set('onboarded', true);
+  if (location.hash.startsWith('#/rx-check') || location.hash.startsWith('#/card')) { /* skip */ } else onboarding();
   if (hasPin() && state.token) lock();
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) hiddenAt = Date.now();
