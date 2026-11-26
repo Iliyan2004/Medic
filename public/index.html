@@ -3,8 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Sehatyab</title>
+  <title>Sehatyab — health care in one place, built for Pakistan</title>
   <meta name="description" content="Medicines, insurance, financial support, hospital map, community, ambulance and your health record — in one place, built for Pakistan.">
+  <!-- Link previews (WhatsApp, Facebook, LinkedIn, X) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sehatyab — health care in one place">
+  <meta property="og:description" content="Order medicines and check they are genuine, call the fastest ambulance, find verified hospitals, get zakat and government support, and keep your family's health record — in English and Urdu.">
+  <meta property="og:image" content="/icon.svg">
+  <meta name="twitter:card" content="summary">
   <meta name="theme-color" content="#0d7a6f">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -28,7 +34,34 @@
   </header>
   <div class="layout">
     <nav class="sidenav" id="nav" aria-label="Main"></nav>
-    <main id="view" tabindex="-1"><p class="muted pad">Loading…</p></main>
+    <!-- Readable without JavaScript (search engines, link previews, text-only readers).
+         The app replaces this the moment its script runs, so normal visitors never see it. -->
+    <main id="view" tabindex="-1">
+      <section class="card">
+        <h1>Sehatyab — health care, all in one place</h1>
+        <p>A digital health platform for Pakistan. Medicines, insurance, financial support, hospitals, ambulances and your health record, in one lightweight app that works on low-cost phones and slow networks, in English and Urdu.</p>
+        <p><b>Emergency? Call 1122 (Rescue) or 115 (Edhi).</b></p>
+      </section>
+      <section class="card">
+        <h2>What you can do</h2>
+        <ul>
+          <li><b>Pharmacy:</b> order OTC and prescription medicines from licensed pharmacies, compare prices, and scan a pack's DRAP barcode to check it is genuine.</li>
+          <li><b>Ambulance:</b> one tap sends the fastest ambulance from government, charity and private fleets. No account needed.</li>
+          <li><b>Hospitals and camps:</b> a map of verified hospitals, clinics, labs and blood banks, plus over 4,000 places from OpenStreetMap and free health camps.</li>
+          <li><b>Financial support:</b> one check matches you to zakat, Bait-ul-Mal, company CSR and government programmes, paid directly at the pharmacy or hospital.</li>
+          <li><b>Insurance:</b> compare takaful and conventional plans, check Sehat Card eligibility and claim in minutes.</li>
+          <li><b>My care:</b> medicine reminders and refills, lab tests at home, appointment call-backs, and care for your whole family from one phone.</li>
+          <li><b>Health record:</b> encrypted and controlled by you. Share it with a time-limited code and see everyone who opened it.</li>
+          <li><b>Emergency card:</b> blood group, allergies, conditions and an emergency contact on one screen for paramedics.</li>
+          <li><b>Privacy on shared phones:</b> PIN lock, discreet mode, and alerts that never name a medicine.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Try the demo</h2>
+        <p>This is a working prototype with fictional data. Sign in as a patient with <b>03001234567</b> / <b>Demo@12345</b>.</p>
+        <p class="muted small">Sehatyab needs JavaScript turned on. If this text stays on screen, your browser has JavaScript blocked or is still loading.</p>
+      </section>
+    </main>
   </div>
   <div id="toast" role="status" aria-live="polite"></div>
   <noscript><p class="pad">Sehatyab needs JavaScript. In an emergency call 1122 or 115.</p></noscript>
